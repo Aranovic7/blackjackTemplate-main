@@ -12,17 +12,18 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String player;
         int betDollar;
+        int moneyAmount = 1000;
         int choice;
         int hit = 1;
         int stand = 2;
 
-        System.out.println("Hello and welcome to the finest Blackjack game in the city!");
-        System.out.println("First of all what is your name champ?");
+        System.out.println("Hello and welcome to Aran's Blackjack!");
+        System.out.println("What is your name champ?");
         player = scanner.nextLine();
 
-        System.out.println("That's a great name just like our new champ!");
+        System.out.println("Once again, welcome " + player);
         System.out.println();
-        System.out.println("Okey now! You have 1000$ to play with. How much do you want to bet? PS. You can only bet from 2$ to 500$");
+        System.out.println("You have 1000$ to play with. How much do you want to bet? (notice your bet needs to be 2$ to 500$)");
         betDollar = scanner.nextInt();
 
         if (betDollar > 500) {
@@ -70,14 +71,14 @@ public class Main {
                     sum += playerCards.get(i).getRealValue();
                     if (sum > 21){ // Om summan av korten är större än 21 förlorar användaren
                         System.out.println("You lost! You now lost " + betDollar + " dollars");
-                        System.out.println("You have " + (1000 - betDollar) + " dollars left to play for");
+                        System.out.println("You have " + (moneyAmount - betDollar) + " dollars left to play for");
 
                     } else if (sum == 21) {
-                        System.out.println("Congratulations you won!, you won " + betDollar * 1.5);
-
+                        System.out.println("Congratulations you won!, you won " + betDollar * 1.5 + " dollars");
+                        break;
                     }
                 }
-                break;
+
             } else if (choice == 2) {
                 System.out.println("You chose to stay");
                 int sum = 0;
@@ -85,17 +86,36 @@ public class Main {
                     sum += playerCards.get(i).getRealValue();
                     if (sum > 21) {
                         // beräkna om användarens kort är värd över 21
-                        System.out.println("You lost! You now lost " + betDollar + " dollars, you have " + (1000 - betDollar) + "left to play for" );
-                    } else if (sum == 21)
+                        System.out.println("You lost! You now lost " + betDollar + " dollars, you have " + (moneyAmount - betDollar) + "left to play for" );
+                        break;  // Om den är det break ur loop
+                    } else if (sum == 21) {
                         System.out.println("Congrats you won!");
+                    }
+
+                    else if (dealersCards.get(i).getRealValue() > playerCards.get(i).getRealValue()) {
+                        System.out.println("Du förlora mot dealern, därmed förlora du också " + betDollar
+                        + " dollar, du har totalt: " + (moneyAmount - betDollar) + " dollar kvar att spela för");
+
+                        break;
+                    } else if (playerCards.get(i).getRealValue() > dealersCards.get(i).getRealValue()){
+                        System.out.println("Du vann!! Därmed vann du också din bet: " + betDollar * 1.5 + " dollar" );
+                        break;
+                    }
 
                 }
-                break; // Om den är det break ur loop
 
-            } else
-                System.out.println("Please input 1 to hit or 2 to stay");
+
+            }
 
         }
+        /* TODO - fix the program
+        * Programmet kan beräkna när användaren vinner respektive när användaren förlorar och dealern vinner
+        * Pengarna som användaren lägger in fungerar effektivt, användaren förlorar sin bet vid förlust
+        * - och vinner 1.5 * sin bet, ifall den vinner.
+        * Problemet som uppstått är att vid varje case där användaren vinner eller förlorar så
+        * - frågar programmet fortfarande om hit or stay? även fast jag lagt till breaks
+        * Se för dig sjäklv
+         */
 
 
 
