@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -30,6 +31,7 @@ public class Main {
         }
         else if (betDollar < 2) {
             System.out.println("Your bet can't be less than 2$");
+            System.exit(0);
 
         } else {
             System.out.println();
@@ -37,13 +39,68 @@ public class Main {
         }
         System.out.println("The game starts now! Good luck champ!");
 
-        Deck deckTemplate = new Deck();
 
-        List<Card> deckOfCards = deckTemplate.generateDeck();
-        List<Card> totalOfCards = new ArrayList<>();
-        List<Card> handOfCards = new ArrayList<>();
+
+        Deck deck = new Deck();
+        deck.generateDeck(); // Hämtar kortlek
+
+        List<Card> playerCards = new ArrayList<>();
         List<Card> dealersCards = new ArrayList<>();
+        System.out.println(deck);
+        playerCards.add(deck.drawCard()); // Ger första kortet i kortleken till player
+        System.out.println(deck);
+        playerCards.add(deck.drawCard()); // Ger andra kortet i kortleken till player
+        System.out.println(deck);
+        dealersCards.add(deck.drawCard()); // Ger ett kort till dealer
+        System.out.println(deck);
+        dealersCards.add(deck.drawCard());
 
+        System.out.println("Player cards = " + playerCards);
+        System.out.println("Dealers cards = " + dealersCards.get(0) + " hidden card");
+
+        while (true) { // Kör en loop av while eftersom vi inte vet hur många gånger användaren vill 'hit'
+            // Fråga användaren hit or stay
+            System.out.println("Do you wanna hit(1) or stay(2)?");
+            choice = scanner.nextInt();
+            if (choice == 1){ // If answer is 1, draw new card
+                playerCards.add(deck.drawCard());
+                System.out.println(playerCards); // Skriver ut hur mycket jag har i handen
+                int sum = 0;
+                for (int i = 0; i < playerCards.size(); i++) { // For - loop för beräkning av summan av korten
+                    sum += playerCards.get(i).getRealValue();
+                    if (sum > 21){ // Om summan av korten är större än 21 förlorar användaren
+                        System.out.println("You lost! You now lost " + betDollar + " dollars");
+                        System.out.println("You have " + (1000 - betDollar) + " dollars left to play for");
+
+                    } else if (sum == 21) {
+                        System.out.println("Congratulations you won!, you won " + betDollar * 1.5);
+
+                    }
+                }
+                break;
+            } else if (choice == 2) {
+                System.out.println("You chose to stay");
+                int sum = 0;
+                for (int i = 0; i < playerCards.size(); i++) {
+                    sum += playerCards.get(i).getRealValue();
+                    if (sum > 21) {
+                        // beräkna om användarens kort är värd över 21
+                        System.out.println("You lost! You now lost " + betDollar + " dollars, you have " + (1000 - betDollar) + "left to play for" );
+                    } else if (sum == 21)
+                        System.out.println("Congrats you won!");
+
+                }
+                break; // Om den är det break ur loop
+
+            } else
+                System.out.println("Please input 1 to hit or 2 to stay");
+
+        }
+
+
+
+
+/*
         totalOfCards.add(deckOfCards.get(0));
         deckOfCards.remove(0);
         totalOfCards.add(deckOfCards.get(1));
@@ -96,5 +153,9 @@ public class Main {
                 System.out.println("Dealer has won.");
             }
         }
+
+ */
     }
+
+
 }
