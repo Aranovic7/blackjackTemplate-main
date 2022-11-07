@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
+        /*
         Scanner scanner = new Scanner(System.in);
         String player;
         int betDollar;
@@ -18,7 +18,7 @@ public class Main {
         int stand = 2;
 
         System.out.println("Hello and welcome to Aran's Blackjack!");
-        System.out.println("What is your name champ?");
+        System.out.println("What is your name?");
         player = scanner.nextLine();
 
         System.out.println("Once again, welcome " + player);
@@ -72,6 +72,7 @@ public class Main {
                     if (sum > 21){ // Om summan av korten är större än 21 förlorar användaren
                         System.out.println("You lost! You now lost " + betDollar + " dollars");
                         System.out.println("You have " + (moneyAmount - betDollar) + " dollars left to play for");
+                        break;
 
                     } else if (sum == 21) {
                         System.out.println("Congratulations you won!, you won " + betDollar * 1.5 + " dollars");
@@ -103,19 +104,19 @@ public class Main {
                     }
 
                 }
+*/
+
+       Deck deck = new Deck();
+       deck.startMenu();
+       deck.menu();
+       deck.restartOrExit();
+       Scanner scanner = new Scanner(System.in);
 
 
             }
 
         }
-        /* TODO - fix the program
-        * Programmet kan beräkna när användaren vinner respektive när användaren förlorar och dealern vinner
-        * Pengarna som användaren lägger in fungerar effektivt, användaren förlorar sin bet vid förlust
-        * - och vinner 1.5 * sin bet, ifall den vinner.
-        * Problemet som uppstått är att vid varje case där användaren vinner eller förlorar så
-        * - frågar programmet fortfarande om hit or stay? även fast jag lagt till breaks
-        * Se för dig sjäklv
-         */
+
 
 
 
@@ -175,7 +176,4 @@ public class Main {
         }
 
  */
-    }
 
-
-}
