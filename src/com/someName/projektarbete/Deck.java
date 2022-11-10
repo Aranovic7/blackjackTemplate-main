@@ -113,12 +113,15 @@ public class Deck {
 
         List<Card> playerCards = new ArrayList<>();
         List<Card> dealersCards = new ArrayList<>();
-
+        System.out.println(deck);
         playerCards.add(deck.drawCard());
+        System.out.println(deck);
         playerCards.add(deck.drawCard());
+        System.out.println(deck);
+        dealersCards.add(deck.drawCard());
+        System.out.println(deck);
+        dealersCards.add(deck.drawCard());
 
-        dealersCards.add(deck.drawCard());
-        dealersCards.add(deck.drawCard());
 
         System.out.println("Player cards = " + playerCards);
         System.out.println("Dealers cards = " + dealersCards.get(0) + " hidden card");
@@ -144,10 +147,33 @@ public class Deck {
                         restartOrExit();
                         break;
                     }
+
                 }
 
             } else if (choice == 2) {
                 System.out.println("You chose to stay");
+                System.out.println("Time for dealer to either hit or stay");
+                int sum1 = 0;
+                sum1 += dealersCards.get(0).getRealValue();
+                for (int i = 0; i < dealersCards.size(); i++) {
+                    sum1 += dealersCards.get(i).getRealValue();
+
+                    if (sum1 > 16 && sum1 < 22) {
+                        System.out.println("Dealers hand of cards: " + sum1);
+                        System.out.println("Dealer stays....");
+                        if (sum1 == 21) {
+                            System.out.println("Dealer hand of cards: " + sum1 + " Dealer wins! It's BLACKJACK!");
+
+
+                        }
+                    } else if (sum1 < 17) {
+                        System.out.println("Dealer draws another card");
+                         dealersCards.add(deck.drawCard());
+                        System.out.println(dealersCards);
+
+                    }
+
+                }
                 int sum = 0;
                 for (int i = 0; i < playerCards.size(); i++) {
                     sum += playerCards.get(i).getRealValue();
@@ -158,16 +184,15 @@ public class Deck {
                         break;
                     } else if (sum == 21) {
                         System.out.println("Congrats you won!");
+                        restartOrExit();
+                        break;
                     } else if (dealersCards.get(i).getRealValue() > playerCards.get(i).getRealValue()) {
                         System.out.println("You lost against the dealer, therefore you also lost " + betDollar + " dollars");
-                        //System.out.println(moneyAmount);
                         restartOrExit();
-
                         break;
                     } else if (playerCards.get(i).getRealValue() > dealersCards.get(i).getRealValue()) {
                         System.out.println("You won!! Therefore you also won: " + betDollar + " dollar");
                         moneyAmount += betDollar * 1.5;
-                        //System.out.println(moneyAmount);
                         restartOrExit();
                         break;
                     } else if (playerCards.get(i).getRealValue() == dealersCards.get(i).getRealValue()){
@@ -180,25 +205,7 @@ public class Deck {
                 }
 
             }
-            while (true) {
-                int sum1 = 0;
-                for (int i = 0; i < dealersCards.size(); i++) {
-                    sum1 += dealersCards.get(i).getRealValue();
-                    if (sum1 < 17){
-                        System.out.println("Dealer draws card...");
-                        dealersCards.add(deck.drawCard());
-                        restartOrExit();
-                        break;
-                    } else if (sum1 >= 17 && sum1 <= 21 && dealersCards.size() > playerCards.size()) {
-                        System.out.println("Dealer wins!");
-                        restartOrExit();
-                        break;
-                    } else  {
-                        System.out.println("Something went wrong");
-                        break;
-                    }
-                }
-        }
+
 
 
     }}}
